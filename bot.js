@@ -1,7 +1,7 @@
 /**
- * EclipseAC License Bot (Fixed for Discord.js v15+)
+ * EclipseAC License Bot (Fixed for Discord.js v14/15)
  * ==================================================
- * Fully compatible with current Discord.js versions (v15+).
+ * Fully compatible with current Discord.js versions.
  */
 
 require("dotenv").config();
@@ -41,7 +41,8 @@ async function callLicenseServer(method, path, body = null) {
 // Bot
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.on("clientReady", () => {
+// Use 'once' for ready event to avoid deprecation warning
+client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 });
 
@@ -133,3 +134,5 @@ Expires: ${expires || 'never'}`); } catch {}
     return interaction.editReply(`🔑 Your licenses:\n` + lines.join("\n"));
   }
 });
+
+client.login(process.env.BOT_TOKEN);
